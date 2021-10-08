@@ -58,6 +58,7 @@ import com.fieldbook.tracker.traits.BaseTraitLayout;
 import com.fieldbook.tracker.utilities.Constants;
 import com.fieldbook.tracker.objects.RangeObject;
 import com.fieldbook.tracker.utilities.DialogUtils;
+import com.fieldbook.tracker.utilities.PrefsConstants;
 import com.fieldbook.tracker.utilities.Utils;
 
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -348,7 +349,7 @@ public class CollectActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // if a brapi observation that has been synced, don't allow deleting
-                String exp_id = Integer.toString(ep.getInt("SelectedFieldExpId", 0));
+                String exp_id = Integer.toString(ep.getInt(PrefsConstants.SELECTED_FIELD_ID, 0));
                 TraitObject currentTrait = traitBox.getCurrentTrait();
                 if (dt.isBrapiSynced(exp_id, rangeBox.getPlotID(), currentTrait.getTrait())) {
                     if (currentTrait.getFormat().equals("photo")) {
@@ -658,7 +659,7 @@ public class CollectActivity extends AppCompatActivity {
         }
 
         traitBox.update(parent, value);
-        String exp_id = Integer.toString(ep.getInt("SelectedFieldExpId", 0));
+        String exp_id = Integer.toString(ep.getInt(PrefsConstants.SELECTED_FIELD_ID, 0));
 
         Observation observation = dt.getObservation(exp_id, rangeBox.getPlotID(), parent);
         String observationDbId = observation.getDbId();
@@ -692,7 +693,7 @@ public class CollectActivity extends AppCompatActivity {
             return;
         }
 
-        String exp_id = Integer.toString(ep.getInt("SelectedFieldExpId", 0));
+        String exp_id = Integer.toString(ep.getInt(PrefsConstants.SELECTED_FIELD_ID, 0));
         TraitObject trait = traitBox.getCurrentTrait();
         if (dt.isBrapiSynced(exp_id, rangeBox.getPlotID(), trait.getTrait())) {
             brapiDelete(parent, true);
@@ -1155,7 +1156,7 @@ public class CollectActivity extends AppCompatActivity {
 
         TraitObject trait = getCurrentTrait();
 
-        String studyId = Integer.toString(ep.getInt("SelectedFieldExpId", 0));
+        String studyId = Integer.toString(ep.getInt(PrefsConstants.SELECTED_FIELD_ID, 0));
 
         dt.insertUserTraits(rangeBox.getPlotID(), trait.getFormat(), trait.getTrait(), size,
                 ep.getString("FirstName", "") + " " + ep.getString("LastName", ""),
@@ -1390,7 +1391,7 @@ public class CollectActivity extends AppCompatActivity {
             if (newTraits.containsKey(traitName))
                 newTraits.remove(traitName);
 
-            String exp_id = Integer.toString(ep.getInt("SelectedFieldExpId", 0));
+            String exp_id = Integer.toString(ep.getInt(PrefsConstants.SELECTED_FIELD_ID, 0));
 
             dt.deleteTrait(exp_id, plotID, traitName);
         }
